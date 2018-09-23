@@ -137,8 +137,7 @@ export default {
         }
       })
       return;
-
-     
+  
       /* if (!allInch.some(e => e.name === 'allInch')) {
         axios({
           method: 'post',
