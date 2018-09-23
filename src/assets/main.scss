@@ -1,0 +1,122 @@
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  height: 100vh;
+  padding: 0px;
+  margin: 0px;
+  ul {
+    padding: 0px;
+    margin: 0px;
+  }
+}
+
+.container {
+  height: 100vh;
+  display: -webkit-flex;
+  display:         flex;
+ 
+  /* -webkit-justify-content: center;
+          justify-content: center; */   
+  .nav {
+    background-color: #262A2F;
+    display: table;
+    height: 100%;
+    .wrap {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    ul {
+      li {
+        list-style: none;
+        cursor: pointer;
+        font-size: 1.5em;
+        color: #FFFFFF;
+        padding: 10px 20px;
+        margin: 10px 20px;
+        border: 1px solid #ffffff;
+        border-radius: 10px;
+      }
+    }
+    
+    li.active {
+      color: red;
+    }
+  } 
+  .selectSection {
+    
+    align-self: flex-start;
+    width: 100%;
+    
+    .cap {
+      position: relative;
+      text-align: center;
+      padding:10px 0px;
+      > button {
+        
+        position: absolute;
+        top: 12px;
+        margin-left: 10px;      
+      }
+    }
+    ul {
+      li {
+        float: left;
+        list-style: none;
+        cursor: pointer;
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid #111;
+        border-radius: 10px;
+      }
+      li.active {
+        color: red;
+      }
+    }
+    .tireHeightLi {
+      padding: 5px 10px;
+    }
+    .tireHeight {
+      clear: both;
+    }
+  }
+  .inputSection {
+    margin-top: 100px;
+    padding: 20px 10px;
+    clear:both;
+    span {
+      font-size: 30px;
+    }
+    input {
+      font-size: 30px;
+      text-align: right;
+      width: 50px;
+      padding: 10px;
+      border: 1px solid #111111;
+      border-radius: 5px;
+    }
+  }
+ 
+}
+.logout {
+  margin-left: 10px;
+}
+
+.signUp {
+  height: 300px;
+  /* display: -webkit-flex;
+  display:         flex;
+   -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center   */
+  text-align: center;
+  margin-top: 100px;
+  div {
+    margin:10px 0px;
+  }
+  input  {
+    padding: 10px;
+  }
+  button {
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+}
