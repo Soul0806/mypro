@@ -62,7 +62,9 @@
 
 <script>
 //import firebase from 'firebase'
+
 const db = require('../db.js').db;
+const auth = require('../db.js').auth;
 const ref = db.ref();
 const tires = db.ref('tires/');
 
@@ -97,25 +99,39 @@ export default {
 
       var  tireSpecs = width;
       if(height != '') {
-        tireSpecs += '/' + height
+        tireSpecs += '-' + height
       }
       tireSpecs += '-' + inch;
 
+      tireSpecs = encodeURIComponent(tireSpecs);
 
+      var targetInch = 'tire/' + inch ;
+      var targetSpecs = 'tire/' + inch + '/' + tireSpecs;
+    
       if(  inch == '' || 
           (width == '' && height == '')) {
         alert('invalid input');
         return;
       }
       
-      ref.child('tire/' + inch ).once('value', snapShot => {
+      ref.child(targetInch).once('value', snapShot => {
         if (snapShot.exists()) {
-          console.log('exists');
+          ref.child(targetSpecs).once('value', snapShot => {
+            if (snapShot.exists()) {
+              console.log('exists');
+            } else {
+              ref.child(targetSpecs).set(
+                 {num: 1}
+              )
+            }
+          })
+
+
           
         } else {
           console.log('no data');
-          ref.child('tire/' + inch).set(
-            {spec: tireSpecs}
+          ref.child(targetSpecs).set(
+            {num: 1}
           )
           ref.child('tire/inches').set(
             [inch]
@@ -183,22 +199,11 @@ export default {
      } */
      axios({
         method: 'delete',
-        url: 'http://localhost:3000/content',
-        data: {
-        
-        }
-      })
-     
-    },
-    add(data){
-      axios({
-        method: 'post',
-        url: 'http://localhost:3000/content',
-        data: data
+        url: 'http://localhost:3000/content'
       })
     },
     logout() {
-      fb.auth.signOut().then(() => {
+      auth.signOut().then(() => {
         this.$router.replace('login');
       })
     }
