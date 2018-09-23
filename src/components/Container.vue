@@ -124,8 +124,7 @@ export default {
             }
           })
 
-
-          
+       
         } else {
           console.log('no data');
           ref.child(targetSpecs).set(
