@@ -45,11 +45,28 @@
         <button @click="check">確認</button>
         <button @click="clean">clean</button>
       </div>
-      <div class="outputSection">
+      <div class="view">
+        <ul >
+          <li v-for="inch in inches.range"
+            :class="{ active: isActive(inches,inch) }"
+            @click="active(inches,inch), specs.inch = inch">
+            {{ inch }}
+          </li>
+          <div>
+            <ul>
+              <li v-for="tire in data.tires">
+                {{ tire }}
+              </li>
+            </ul>
+          </div>
+        </ul>
+      </div>
+
+      <!-- <div class="outputSection">
         {{ specs.width }} 
         <span v-if="specs.height"> / </span>
         {{specs.height}} - {{specs.inch}}
-      </div>
+      </div> -->
     </div>
     <router-link to="/login">
       <div v-if="false" class="login">Login</div>
@@ -73,7 +90,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      data:{},
+      data:{  tempInch: [], inches: [], tires: [] },
       content: { allInch:[] },
       specs: { width:'', height:'', inch:'' },
       selected: false,
@@ -85,6 +102,14 @@ export default {
   methods: {
     active(obj,key) {
       obj.current = key;
+      this.data.tires = [];
+      ref.child('tire/' + key).once('value', snapShot => {
+        let oTire = snapShot.val();
+        for (let key in oTire) {
+          console.log(key);
+          this.data.tires.push(key); 
+        }
+      })
     },
     isActive(obj,key) {
       return obj.current == key ? true : false       
@@ -93,9 +118,11 @@ export default {
       obj.range = arr;
     },
     check() {
-      var inch = this.specs.inch;
-      var width = this.specs.width;
-      var height = this.specs.height;
+      var inch     = this.specs.inch;
+      var width    = this.specs.width;
+      var height   = this.specs.height;
+      var tempInch = this.data.tempInch;
+      var updates  = {};
 
       var  tireSpecs = width;
       if(height != '') {
@@ -105,38 +132,33 @@ export default {
 
       var targetInch = 'tire/' + inch ;
       var targetSpecs = 'tire/' + inch + '/' + tireSpecs;
-    
+ 
       if(  inch == '' || 
           (width == '' && height == '')) {
         alert('invalid input');
         return;
       }
-      
+      tempInch.push(inch);
       ref.child(targetInch).once('value', snapShot => {
         if (snapShot.exists()) {
+          console.log(123);
           ref.child(targetSpecs).once('value', snapShot => {
             if (snapShot.exists()) {
-              console.log('exists');
+              alert('exists');
             } else {
-              ref.child(targetSpecs).set(
-                 {num: 1}
-              )
+              ref.child(targetSpecs).set( {num: 1})
+              this.data.tires.push(tireSpecs);
+              this.specs.height = '';
             }
           })
-
-       
         } else {
-          console.log('no data');
-          ref.child(targetSpecs).set(
-            {num: 1}
-          )
-          ref.child('tire/inches').set(
-            [inch]
-          )
+          ref.child(targetSpecs).set( {num: 1} )
+          ref.child('tire/inches').set( [tempInch] )
+          this.data.tires.push(tireSpecs);
+          this.specs.height = ''
         }
       })
-      return;
-  
+ 
       /* if (!allInch.some(e => e.name === 'allInch')) {
         axios({
           method: 'post',
@@ -190,9 +212,12 @@ export default {
       //console.log(tire.allInch.indexOf(12));
     },
     clean() {
-     /* for (let i = 1; i <= this.tire.content.length; i++) {
-      axios.delete(`http://localhost:3000/content/`)
-     } */
+      this.specs.inch = '';
+      this.specs.width = '';
+      this.specs.height = '';
+      this.inches.current = '';
+      this.tireWidthRange.current = '';
+      this.tireHeightRange.current = '';
     },
     logout() {
       auth.signOut().then(() => {
@@ -222,11 +247,28 @@ export default {
     axios.get('http://localhost:3000/content')
     .then((res) => {
       this.content.allInch = res.data;
-    /* this.tire.allInch = res.data.find(x => x.name == 'allInch').allInch;
-    this.tire.content = res.data; */
-    /* books.once('value').then((snapShot) => {
-        this.data = snapShot.val();
-      }) */
+   
+       ref.child('tire/inches').once('value',snapShot => {
+        let oInches = snapShot.val();
+        if( oInches != null) {
+          Object.keys(oInches).map( (key) => {  this.data.tempInch = oInches[key]; })
+        }
+      }) 
+    
+      ref.child('tire').once('value', snapShot => {
+        let oTire = snapShot.val();
+        for(let key in oTire) {
+        ref.child('tire/' + key).once('value', snapShot => {
+          let oTire = snapShot.val();
+            for (let key in oTire) {              
+              //this.data.tires.push(key);
+            } 
+            //this.data.tires.pop();     
+        })
+      }
+        //Object.keys(oTire).map( (key) => {  console.log(oTire[key]); })
+        
+      })
     })
   } 
 }
