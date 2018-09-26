@@ -12,22 +12,20 @@
         </div>
     </div>
     <div class="selectSection">
-      <div class="cap tireWitdh">
+      <div class="cap tireWitdh" @click="ctlWidth = !ctlWidth">
         胎寬
-        <button>clear</button>
       </div>
-      <ul>
+      <ul v-if="ctlWidth">
         <li v-for="tireWidth in tireWidthRange.range"
             :class="{ active: isActive(tireWidthRange, tireWidth) }"
             @click="active(tireWidthRange, tireWidth), specs.width = tireWidth">
             {{ tireWidth }}
         </li>
       </ul>
-      <div class="cap tireHeight">
+      <div class="cap tireHeight" @click="ctlHeight = !ctlHeight">
         胎高
-        <button @click="specs.height = '', tireHeightRange.current = 0">clear</button>
       </div>
-      <ul>
+      <ul v-if="ctlHeight">
         <li class="tireHeightLi" 
             v-for="tireHeight in tireHeightRange.range"
             :class="{ active: isActive(tireHeightRange, tireHeight) }"
@@ -45,32 +43,29 @@
         <button @click="check">確認</button>
         <button @click="clean">clean</button>
       </div>
-      <div class="view">
-        <ul >
+      <div class="viewSection">
+        <ul>
           <li v-for="inch in inches.range"
             :class="{ active: isActive(inches,inch) }"
             @click="active(inches,inch), specs.inch = inch">
             {{ inch }}
           </li>
-          <div>
-            <ul>
-              <li v-for="tire in data.tires">
-                {{ tire }}
-              </li>
-            </ul>
-          </div>
         </ul>
+      </div>  
+      <div class="list">
+        <ol>
+          <li class="sp" v-for="tire in data.tires" >
+            <div class="specs" @mouseover="">{{ tire.spec }}</div>
+            <span class="ctlButton">
+              <button class="add"> + </button>
+              <div class="tireNum">{{ tire.num }}</div>
+              <button class="substract"> - </button>
+            </span>
+          </li>
+          
+        </ol>
       </div>
-
-      <!-- <div class="outputSection">
-        {{ specs.width }} 
-        <span v-if="specs.height"> / </span>
-        {{specs.height}} - {{specs.inch}}
-      </div> -->
     </div>
-    <router-link to="/login">
-      <div v-if="false" class="login">Login</div>
-    </router-link>
     <div class="logout">
       <button @click="logout">Logout</button>
     </div>
@@ -78,8 +73,8 @@
 </template>
 
 <script>
-//import firebase from 'firebase'
 
+//import db from 'firebase'
 const db = require('../db.js').db;
 const auth = require('../db.js').auth;
 const ref = db.ref();
@@ -90,8 +85,9 @@ export default {
   name: 'Home',
   data () {
     return {
+      ctlWidth: true,
+      ctlHeight: true,
       data:{  tempInch: [], inches: [], tires: [] },
-      content: { allInch:[] },
       specs: { width:'', height:'', inch:'' },
       selected: false,
       inches: { range:[], current:'' },
@@ -100,14 +96,20 @@ export default {
     }
   },
   methods: {
+    a() {
+      console.log(123);
+    },
     active(obj,key) {
       obj.current = key;
       this.data.tires = [];
       ref.child('tire/' + key).once('value', snapShot => {
         let oTire = snapShot.val();
-        for (let key in oTire) {
-          console.log(key);
-          this.data.tires.push(key); 
+        for (let k in oTire) {
+          ref.child('tire/' + key + '/' + k).once('value', snapShot => {
+            let num = snapShot.val().num;
+            let obj = { spec:k, num: num };
+            this.data.tires.push(obj); 
+          })
         }
       })
     },
@@ -158,58 +160,6 @@ export default {
           this.specs.height = ''
         }
       })
- 
-      /* if (!allInch.some(e => e.name === 'allInch')) {
-        axios({
-          method: 'post',
-          url: 'http://localhost:3000/content',
-          data: {
-            [this.specs.inch]: [tireSpecs]
-          }
-        })
-
-         axios({
-          method: 'post',
-          url: 'http://localhost:3000/content',
-          data: {
-            "allInch": [this.specs.inch],
-            "name": "allInch"
-          }
-        })
-      }else {
-
-      } */
-     
-      /* if( !this.content.hasOwnProperty(this.specs.inch) ) {
-        axios({
-          method: 'put',
-          url: 'http://localhost:3000/content',
-          data: {
-            [this.specs.inch]: [tireSpecs]
-          }
-        })
-      }else {
-        axios({
-          method: 'put',
-          url: 'http://localhost:3000/content',
-          data: {
-            [this.specs.inch]: this.content[this.specs.inch].push(123)
-          }
-        })
-      }
-      return;
-      if( this.tire.allInch.indexOf(this.specs.inch) < 0 ) {
-        this.add( { [this.specs.inch]: [tireSpecs] } );
-      } else {
-        axios({
-          method: 'put',
-          url: 'http://localhost:3000/content',
-          data: {
-            [this.specs.inch]: this.specs.inch.push(tireSpecs)
-          }
-        })
-      } */
-      //console.log(tire.allInch.indexOf(12));
     },
     clean() {
       this.specs.inch = '';
@@ -226,8 +176,9 @@ export default {
     }
   },
   mounted() {
-    var tempWidthRange = [];
-    var tempHeightRange = [];
+    var tempWidthRange = [],
+        tempHeightRange = [],
+        tempInchRange = [];
 
     for (let i = 155; i <= 325; i += 10) {     
       tempWidthRange.push(i);
@@ -235,20 +186,15 @@ export default {
     for (let i = 30; i <= 75; i += 5) {
       tempHeightRange.push(i);
     }
-
+    for (let i = 12; i <= 18; i++) {
+      tempInchRange.push(i);
+    }
+    
     this.assemble(this.tireWidthRange, tempWidthRange)
     this.assemble(this.tireHeightRange, tempHeightRange)
+    this.assemble(this.inches, tempInchRange)
 
-    axios.get('http://localhost:3000/inches')
-    .then((res) => {
-     this.assemble(this.inches, res.data);
-    })
-
-    axios.get('http://localhost:3000/content')
-    .then((res) => {
-      this.content.allInch = res.data;
-   
-       ref.child('tire/inches').once('value',snapShot => {
+    ref.child('tire/inches').once('value',snapShot => {
         let oInches = snapShot.val();
         if( oInches != null) {
           Object.keys(oInches).map( (key) => {  this.data.tempInch = oInches[key]; })
@@ -258,18 +204,16 @@ export default {
       ref.child('tire').once('value', snapShot => {
         let oTire = snapShot.val();
         for(let key in oTire) {
-        ref.child('tire/' + key).once('value', snapShot => {
-          let oTire = snapShot.val();
-            for (let key in oTire) {              
-              //this.data.tires.push(key);
-            } 
-            //this.data.tires.pop();     
-        })
-      }
+          ref.child('tire/' + key).once('value', snapShot => {
+            let oTire = snapShot.val();
+              for (let key in oTire) {              
+                //this.data.tires.push(key);
+              } 
+              //this.data.tires.pop();     
+          })
+        }
         //Object.keys(oTire).map( (key) => {  console.log(oTire[key]); })
-        
       })
-    })
   } 
 }
 </script>
