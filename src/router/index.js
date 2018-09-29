@@ -3,11 +3,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import container from '@/components/container'
 import login from '@/components/login'
+import menu from '@/components/menu'
 import firebase from 'firebase'
 
 Vue.use(Router)
 
-let router =  new Router({
+const router =  new Router({
   mode: 'history',
   routes: [
     {
@@ -18,6 +19,14 @@ let router =  new Router({
       path: '/',
       name: 'Container',
       component: container,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/new',
+      name: 'new',
+      component: menu,
       meta: {
         requiresAuth: true
       }

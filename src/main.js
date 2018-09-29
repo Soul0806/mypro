@@ -7,10 +7,14 @@ import router from './router'
 import { store } from './store.js'
 import firebase from 'firebase'
 
+import regular from '@/regular.js'
+Vue.mixin(regular);
+
 const fb = require('./db.js')
 import '@/assets/main.scss'
-const axios = require('axios');
-Vue.config.productionTip = false
+
+//const axios = require('axios');
+//Vue.config.productionTip = false
 /* eslint-disable no-new */
 
 let app;
@@ -34,7 +38,7 @@ fb.auth.onAuthStateChanged(function(user) {
       el: '#app',
       router,
       store,
-      components: { App  },
+      components: { App },
       template: '<App/>'
    })   
   }
