@@ -34,9 +34,9 @@ const regular = {
         }
       })
     },
-    ctlNums(behav, obj) {
+    ctlNums(behav, obj, inch) {
+      this.specs.inch = inch;
       (behav == 'add') ? obj.num++ : obj.num--;
-
       ref.child('tire/' + this.specs.inch + '/' + obj.spec).set({
         num: obj.num
       });

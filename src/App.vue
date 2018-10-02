@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <div class="header">
-      <router-link to="/">總覽   </router-link> | 
-      <router-link to="/new">新增   </router-link>
-    </div>
+    <router-view  name="top"/>
     <router-view/>
     <!-- <test></test> -->
   </div>

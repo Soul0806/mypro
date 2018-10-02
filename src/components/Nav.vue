@@ -7,16 +7,7 @@
       </li>
     </ul>
     <div class="navList">
-      <ol>
-        <li class="sp" v-for="tire in data.tires" >
-        <span class="spec">{{ tire.spec }}</span>
-          <span class="ctlButton">
-            <button class="add" @click="ctlNums('add', tire)"> + </button>
-            <div class="tireNum">{{ tire.num }}</div>
-            <button class="substract" @click="ctlNums('substract', tire)"> - </button>
-          </span>
-        </li>
-      </ol>
+      <vueli liCName="sp" spanCName="spec" divCName="tireNum" :arr="data.tires" content="spec" content1="num"></vueli>
     </div>
   </div>
 </template>
