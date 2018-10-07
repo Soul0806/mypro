@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import {db, auth, ref, tires} from '@/db.js'
 
 /* const db = require('@/db.js').db;
@@ -19,29 +18,11 @@ const regular = {
   },
   methods: {
     active(key) {
-      console.log(this.specs);
-      var delay = 400;
-      if (this.lastClick != 0) {
-        if (this.lastClick >= (Date.now() - delay))
-          return;
-      }
-      this.lastClick = Date.now();
-      this.data.tires = [];
-      ref.child('tire/' + key).once('value', snapShot => {
-        let oTire = snapShot.val();
-        for (let k in oTire) {
-          ref.child('tire/' + key + '/' + k).once('value', snapShot => {
-            let num = snapShot.val().num;
-            let obj = { spec: k, num: num };
-            this.data.tires.push(obj);
-          })
-        }
-      })
     },
     ctlNums(behav, obj, inch) {
       this.specs.inch = inch;
       (behav == 'add') ? obj.num++ : obj.num--;
-      ref.child('tire/' + this.specs.inch + '/' + obj.spec).set({
+      this.ref.child('tire/' + this.specs.inch + '/' + obj.spec).set({
         num: obj.num
       });
     }

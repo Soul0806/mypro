@@ -14,7 +14,8 @@ const db = firebase.database();
 //const db = firebase.firestore();
 const auth = firebase.auth(); 
 const currentUser = auth.currentUser;
-const ref = db.ref('tire/');
+const ref = db.ref('/');
+const tires = db.ref('tires/');
 
 /* const settings = {
   timestampsInSnapshots: true
@@ -28,7 +29,8 @@ export {
   db,
   auth,
   currentUser,
-  ref
+  ref,
+  tires
   //booksCollection,
   //usersCollection
 }

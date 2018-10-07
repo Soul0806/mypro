@@ -7,8 +7,8 @@ import router from './router'
 import { store } from './store.js'
 import firebase from 'firebase'
 
-import regular from '@/regular.js'
-Vue.mixin(regular);
+import helpers from '@/helpers.js'
+Vue.mixin(helpers);
 
 const fb = require('./db.js')
 import '@/assets/main.scss'
@@ -18,7 +18,9 @@ import '@/assets/main.scss'
 /* eslint-disable no-new */
 import defineElements from '@/defineElements.js'
 const vueli = defineElements.vueli;
+const test = defineElements.test;
 Vue.component('vueli', vueli);
+Vue.component('test', test);
 
 let app;
 // Initialize Firebase

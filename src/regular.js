@@ -10,12 +10,13 @@ const regular = {
       auth,
       ref,
       tires,
-      data: { tempInch: [], inches: [], tires: [] },
+      data: { tempInch: [], inches: [], tires: {} },
       specs: { width: '', height: '', inch: '' }
     }
   },
   methods: {
     active(key) {
+      console.log(123);
       var delay = 400;
       if (this.lastClick != 0) {
         if (this.lastClick >= (Date.now() - delay))
@@ -28,7 +29,7 @@ const regular = {
         for (let k in oTire) {
           ref.child('tire/' + key + '/' + k).once('value', snapShot => {
             let num = snapShot.val().num;
-            let obj = { spec: k, num: num };
+            let obj = { key: { spec: k, num: num } };
             this.data.tires.push(obj);
           })
         }

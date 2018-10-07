@@ -1,14 +1,14 @@
 <template>
   <div class="nav">
-    <ul>
-      <li tabindex="-1" v-for="inch in inches.range" 
-        @click="active(inch),specs.inch = inch">
-        {{ inch }}
-      </li>
-    </ul>
-    <div class="navList">
-      <vueli liCName="sp" spanCName="spec" divCName="tireNum" :arr="data.tires" content="spec" content1="num"></vueli>
-    </div>
+    <ul class="inch">
+      <li v-for="tire in data.tires">
+        {{ tire.inch }}
+        <div class="navList">
+        <vueli liCName="sp" spanCName="spec" divCName="tireNum" :arr="tire.contents" content="spec" content1="num">
+        </vueli>
+        </div>
+      </li> 
+    </ul> 
   </div>
 </template>
 <script>
@@ -18,7 +18,8 @@ export default {
   data() { 
     return {
       lastClick: 0,
-      inches: { range:[] }
+      inchRange: [],
+      contents: []
     }
   },
   computed: {
@@ -30,14 +31,29 @@ export default {
       this.ref.child('tire/' + this.specs.inch + '/' + obj.spec).set({
           num: obj.num
         });
+    },
+    test() {
     }
   },
   mounted() {
-    var tempInchRange = [];
-    for (let i = 12; i <= 18; i++) {
-      tempInchRange.push(i);
-    }
-    this.inches.range = tempInchRange;
+    for (let i = 12; i <= 20; i++) {        
+      this.ref.child('tire/' + i).once('value', snapShot => {
+        var contents = [];
+        let oTire = snapShot.val();
+        for (let j in oTire) {
+          this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
+            let num = snapShot.val().num; 
+            let obj = { spec: j, num: num } 
+            contents.push(obj);   
+          })
+        }
+        this.data.tires.push({
+          inch: i,
+          contents: contents
+        })
+      })
+      // 12 13'' combined
+    }  
   }
 }
 </script>
