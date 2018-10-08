@@ -11,7 +11,9 @@
     </ul -->
     <div class="navInch">
       <ul>
-        <li v-for="inch in data.inches" @mouseover="updateView(inch)">
+        <li v-for="inch in data.inches" 
+        @mouseover="updateView(inch)"
+        @mouseleave="">
           {{ inch }}
         </li>         
       </ul>      
@@ -34,7 +36,7 @@ export default {
     return {
       lastClick: 0,
       currrentInch: 12,
-      contents: [],
+      contents: []
     }
   },
   computed: {
@@ -44,10 +46,10 @@ export default {
     updateView(inch) {
       var i = inch;
       this.data.tires = [];
-      return;
       this.ref.child('tire/' + i).once('value', snapShot => {
         var contents = [];
         let oTire = snapShot.val();
+        console.log(213);
         for (let j in oTire) {
           this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
             let num = snapShot.val().num;
@@ -55,6 +57,7 @@ export default {
             this.data.tires.push(obj);
           })
         }
+       
         /* this.data.tires.push({
           [i]: contents
         }) */
