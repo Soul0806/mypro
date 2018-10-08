@@ -1,4 +1,5 @@
 @import 'mixins';
+
 .nav {
   margin-top: 30px;
   /* -webkit-justify-content: center;
@@ -6,6 +7,7 @@
   ul.inch {
       @include center;
     > li {
+      height: 200px;
       width: 450px;
       list-style:none;
       text-align: center;
@@ -17,6 +19,9 @@
     } 
   }
   .navList {
+      height: 150px;
+      width: 450px;
+      overflow: auto;
     ol {
       @include space-between;
       list-style-type: none;
@@ -24,7 +29,7 @@
       padding: 0px; 
       li {
       font-size: 1rem;
-      padding: 10px;     
+      padding: 5px;     
       border: none;        
        .spec {         
           width:130px;
@@ -34,22 +39,20 @@
        }
       }
     }
-
-    .sp:hover > span {
+    .sp:hover span {
       visibility:visible;
     }
     .ctlButton {
       visibility:hidden;
       margin-left: 20px;
- 
       .tireNum{
         display: inline-block;
         text-align: center;
         width:50px;
-        
       }
     }
   }
+
 } 
 
 .temp {
