@@ -59,6 +59,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 @import '@/assets/nav.scss';
 </style>
 

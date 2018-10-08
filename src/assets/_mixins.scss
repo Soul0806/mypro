@@ -1,0 +1,14 @@
+@mixin flex {
+ display: inline-flex; 
+ flex-wrap: wrap;
+}
+
+@mixin center {
+  @include flex;
+  justify-content: center;
+}
+
+@mixin space-between {
+  @include flex;
+  justify-content: space-between;
+}
