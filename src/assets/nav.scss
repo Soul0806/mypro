@@ -5,7 +5,7 @@
   /* -webkit-justify-content: center;
     justify-content: center; */ 
   ul.inch {
-      @include center;
+      @include flex-center;
     > li {
      
       width: 450px;
@@ -19,11 +19,10 @@
     } 
   }
   .navList {
-      
       width: 450px;
       overflow: auto;
     ol {
-      @include space-between;
+      @include flex-space-between;
       list-style-type: none;
       margin: 0px;
       padding: 0px; 
@@ -63,3 +62,27 @@
   -moz-column-gap: 20px; /* Firefox */
   column-gap: 20px;
 }
+.navInch { 
+  
+  ul {    
+    display: flex;
+    justify-content: center;
+    @include ul-reset;    
+    li {
+      font-size: 1.2rem;
+      padding: 0px 20px;     
+    }
+    :nth-child(n+2) {
+      border-left: 1px solid #0a0a0a5c;
+    }   
+  }
+}
+
+.navView {
+  display: flex;
+  justify-content: center; 
+  text-align: center;
+  width: 80%;
+  margin: 10px auto;
+  border:1px solid #111111;
+}  
