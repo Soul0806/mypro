@@ -18,12 +18,7 @@
         </li>         
       </ul>      
     </div>
-    <div class="navView">
-    <ul>
-      <li v-for="tire in data.tires">
-        {{ tire.spec}}
-      </li>
-    </ul>
+    <div id="navView">
     </div>
     
   </div>
@@ -36,7 +31,8 @@ export default {
     return {
       lastClick: 0,
       currrentInch: 12,
-      contents: []
+      contents: [],
+      navView: document.getElementById('navView')
     }
   },
   computed: {
@@ -44,20 +40,23 @@ export default {
   },
   methods: {
     updateView(inch) {
-      var i = inch;
-      this.data.tires = [];
+      var i = inch;      
       this.ref.child('tire/' + i).once('value', snapShot => {
-        var contents = [];
         let oTire = snapShot.val();
-        console.log(213);
+        var ul = document.createElement('ul');
         for (let j in oTire) {
           this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
             let num = snapShot.val().num;
             let obj = { spec: j, num: num }
-            this.data.tires.push(obj);
+            //this.data.tires.pussobj);   
+            var li  = document.createElement("li");
+            var t   = document.createTextNode(j);
+            li.appendChild(t);
+            ul.appendChild(li);            
           })
         }
-       
+        navView.innerHTML = '';
+        document.getElementById("navView").appendChild(ul);         
         /* this.data.tires.push({
           [i]: contents
         }) */
