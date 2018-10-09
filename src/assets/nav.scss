@@ -7,7 +7,7 @@
   ul.inch {
       @include flex-center;
     > li {
-     
+    
       width: 450px;
       list-style:none;
       text-align: center;
@@ -90,15 +90,27 @@
   @include ul-reset; 
   @include flex-center; 
   flex-direction:column;
-  text-align: center;
+  
   width: 80%;
   height: 200px;
   margin: 50px auto;
   //border:1px solid #111111;
   li {
-    margin: 10px 0px;
-   
-    &:hover span {
+    text-align: center;
+    //text-align: center;
+    div {
+      width: 180px;
+      margin: auto;
+    }
+    span {
+      &:last-child {
+        float: right;
+        color: red;
+      }
+    }
+  
+    &:hover span:first-child {
+      clear: both;
       border-bottom: 2px solid #2f3ece
     }
  

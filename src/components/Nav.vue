@@ -51,10 +51,12 @@ export default {
             var li  = document.createElement("li");
             var span = document.createElement("span");
             var spanNum = document.createElement("span");
+            var div = document.createElement('div');
             span.appendChild( document.createTextNode(j) );
-            spanNum.appendChild(document.createTextNode(num));   
-            li.appendChild(span);
-            li.appendChild(spanNum);
+            spanNum.appendChild(document.createTextNode(num));  
+            div.appendChild(span); 
+            div.appendChild(spanNum); 
+            li.appendChild(div);
             ul.appendChild(li);            
           })
         }
