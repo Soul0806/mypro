@@ -14,13 +14,12 @@
         <li v-for="inch in data.inches" 
         @mouseover="updateView(inch)"
         @mouseleave="">
-          {{ inch }}
+          <span>{{ inch }}</span>
         </li>         
       </ul>      
     </div>
     <div id="navView">
-    </div>
-    
+    </div>    
   </div>
 </template>
 <script>
@@ -31,32 +30,36 @@ export default {
     return {
       lastClick: 0,
       currrentInch: 12,
-      contents: [],
-      navView: document.getElementById('navView')
+      contents: []
     }
   },
   computed: {
-    
+   
   },
   methods: {
-    updateView(inch) {
+    updateView(inch) {  
       var i = inch;      
       this.ref.child('tire/' + i).once('value', snapShot => {
         let oTire = snapShot.val();
         var ul = document.createElement('ul');
+        ul.className = 'navViewUl';
         for (let j in oTire) {
           this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
             let num = snapShot.val().num;
-            let obj = { spec: j, num: num }
+            //let obj = { spec: j, num: num }
             //this.data.tires.pussobj);   
             var li  = document.createElement("li");
-            var t   = document.createTextNode(j);
-            li.appendChild(t);
+            var span = document.createElement("span");
+            var spanNum = document.createElement("span");
+            span.appendChild( document.createTextNode(j) );
+            spanNum.appendChild(document.createTextNode(num));   
+            li.appendChild(span);
+            li.appendChild(spanNum);
             ul.appendChild(li);            
           })
         }
         navView.innerHTML = '';
-        document.getElementById("navView").appendChild(ul);         
+        document.getElementById("navView").appendChild(ul);      
         /* this.data.tires.push({
           [i]: contents
         }) */
