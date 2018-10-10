@@ -11,15 +11,16 @@
     </ul -->
     <div class="navInch">
       <ul>
-        <li v-for="inch in data.inches" 
-        @mouseover="updateView(inch)"
-        @mouseleave="">
+        <li :class="{ active: isActive(inch) }" 
+        v-for="inch in data.inches"  
+        @mouseover="updateView(inch), active(inch)">
           <span>{{ inch }}</span>
         </li>         
       </ul>      
     </div>
     <div id="navView">
-    </div>    
+    </div>
+    <div id="test"></div> 
   </div>
 </template>
 <script>
@@ -29,7 +30,7 @@ export default {
   data() { 
     return {
       lastClick: 0,
-      currrentInch: 12,
+      currrentInch: '',
       contents: []
     }
   },
@@ -37,8 +38,17 @@ export default {
    
   },
   methods: {
+    test() {
+      console.log(123);
+    },
+    active(inch) {
+      this.currrentInch = inch;
+    },
+    isActive(inch) {
+      return this.currrentInch == inch ? true : false;
+    },
     updateView(inch) {  
-      var i = inch;      
+      var i = inch;     
       this.ref.child('tire/' + i).once('value', snapShot => {
         let oTire = snapShot.val();
         var ul = document.createElement('ul');
@@ -46,26 +56,29 @@ export default {
         for (let j in oTire) {
           this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
             let num = snapShot.val().num;
-            //let obj = { spec: j, num: num }
-            //this.data.tires.pussobj);   
             var li  = document.createElement("li");
             var span = document.createElement("span");
             var spanNum = document.createElement("span");
             var div = document.createElement('div');
+            li.className = "test";          
             span.appendChild( document.createTextNode(j) );
             spanNum.appendChild(document.createTextNode(num));  
             div.appendChild(span); 
             div.appendChild(spanNum); 
             li.appendChild(div);
-            ul.appendChild(li);            
+            ul.appendChild(li);   
           })
         }
+        
         navView.innerHTML = '';
-        document.getElementById("navView").appendChild(ul);      
-        /* this.data.tires.push({
-          [i]: contents
-        }) */
-      }) 
+        var li = navView.appendChild(ul);      
+        li.addEventListener('click', function (e) {
+          var div = document.createElement("div");         
+          div.innerHTML = `<button> + </button>
+                           <button> - </button>`;;
+          e.target.parentNode.appendChild(div);
+        })
+      })
     },
     ctlNums(behav, obj) {
       (behav == 'add') ?  obj.num++ : obj.num-- ;
@@ -92,7 +105,8 @@ export default {
         })
       })
       // 12 13'' combined
-    }  
+    }
+      
   }
 }
 </script>
