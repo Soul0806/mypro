@@ -105,8 +105,8 @@ export default {
         })
       })
       // 12 13'' combined
+      var test = 123;
     }
-      
   }
 }
 </script>
