@@ -60,24 +60,30 @@ export default {
             var span = document.createElement("span");
             var spanNum = document.createElement("span");
             var div = document.createElement('div');
-            li.className = "test";          
+            div.id = 'navViewUl-div';
             span.appendChild( document.createTextNode(j) );
             spanNum.appendChild(document.createTextNode(num));  
             div.appendChild(span); 
             div.appendChild(spanNum); 
             li.appendChild(div);
             ul.appendChild(li);   
-          })
-        }
-        
-        navView.innerHTML = '';
-        var li = navView.appendChild(ul);      
-        li.addEventListener('click', function (e) {
-          var div = document.createElement("div");         
-          div.innerHTML = `<button> + </button>
+            
+            span.addEventListener('click', function (e) {
+              var el_child = document.getElementById('navViewUl-button');
+              if (el_child != null) {
+                var el_parent = el_child.parentElement;
+                el_parent.removeChild(el_child);
+              }
+              var div = document.createElement("div");
+              div.id = 'navViewUl-button';
+              div.innerHTML = `<button> + </button>
                            <button> - </button>`;;
-          e.target.parentNode.appendChild(div);
-        })
+              e.target.parentNode.appendChild(div);
+            })
+          })          
+        }        
+        navView.innerHTML = '';
+        navView.appendChild(ul);              
       })
     },
     ctlNums(behav, obj) {
