@@ -15,6 +15,7 @@ export default {
 
 <style lang="scss" scoped>
 .top {
+  font-size: 2rem;
   display: flex;  
   justify-content: center;
   align-items:center;

@@ -1,67 +1,5 @@
 @import 'mixins';
 
-.nav {
-  margin-top: 30px;
-  /* -webkit-justify-content: center;
-    justify-content: center; */ 
-  ul.inch {
-      @include flex-center;
-    > li {
-    
-      width: 450px;
-      list-style:none;
-      text-align: center;
-      font-size: 1.5rem;
-      padding:   10px 20px;
-      margin:    10px 20px;
-      border:    1px solid #111111;
-      border-radius: 10px;
-    } 
-  }
-  .navList {
-      width: 450px;
-      overflow: auto;
-    ol {
-      @include flex-space-between;
-      list-style-type: none;
-      margin: 0px;
-      padding: 0px; 
-      li {
-      font-size: 1rem;
-      padding: 5px;     
-      border: none;        
-       .spec {         
-          width:130px;
-        }
-       .spec:hover {
-          border-bottom: 1px solid blue;
-       }
-      }
-    }
-    .sp:hover span {
-      visibility:visible;
-    }
-    .ctlButton {
-      visibility:hidden;
-      margin-left: 20px;
-      .tireNum{
-        display: inline-block;
-        text-align: center;
-        width:50px;
-      }
-    }
-  }
-
-} 
-
-.temp {
-  -webkit-column-count: 2; /* Chrome, Safari, Opera */
-  -moz-column-count: 2; /* Firefox */
-  column-count: 2;
-  -webkit-column-gap: 20px; /* Chrome, Safari, Opera */
-  -moz-column-gap: 20px; /* Firefox */
-  column-gap: 20px;
-}
 .navInch { 
   ul {    
     display: flex;
@@ -69,16 +7,13 @@
     @include ul-reset;    
     li {
       line-height: 1rem;
-      font-size: 1.2rem;
+      font-size: 2.5rem;
       padding: 0px 20px;
       span {
         padding: 0px 9px;
       }
-      &:hover span {
-              
-      }
       &.active span{
-         font-size: 2rem; 
+         font-size: 3rem; 
          border-bottom: 2px solid #ffa500
       }
     }
@@ -94,26 +29,33 @@
   flex-direction:column;
   
   width: 80%;
+  height: 200px;
   margin: 50px auto;
   //border:1px solid #111111;
   li {
-    text-align: center;
-    //text-align: center;
+    font-size: 2rem;
     div {
       width: 180px;
+      height: 30px;
       margin: 10px auto;
     }
     span {
-      &:last-child {
-        float: right;
-        color: #1f2eb3;
+      &.specs {
+        display: inline-block;
+        width: 100px;
+      }   
+      &:nth-child(2) {
+       display: inline-block;
+       margin: 0px 10px 0px 30px;
       }
-    }
-  
-    &:hover span:first-child {
+    }  
+    &:hover .specs{
       clear: both;
       border-bottom: 2px solid #1f2eb3
     }
- 
+  }
+
+  #navViewUl-div {
+    width: 250px;
   }
 }  

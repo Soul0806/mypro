@@ -1,26 +1,33 @@
 <template>
   <div class="nav">
-    <!-- <ul class="inch">
-      <li v-for="tire in data.tires">
-        {{ tire.inch }}
-        <div class="navList">
-        <vueli liCName="sp" spanCName="spec" divCName="tireNum" :arr="tire.contents" content="spec" content1="num">
-        </vueli>
-        </div>
-      </li> 
-    </ul -->
     <div class="navInch">
       <ul>
         <li :class="{ active: isActive(inch) }" 
         v-for="inch in data.inches"  
         @mouseover="updateView(inch), active(inch)">
-          <span>{{ inch }}</span>
+          <span class="">{{ inch }}</span>
         </li>         
       </ul>      
     </div>
     <div id="navView">
     </div>
-    <div id="test"></div> 
+    <div id="test">
+
+   <!--  <div class="input-group">
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+          <span class="glyphicon glyphicon-minus"></span>
+        </button>
+      </span>
+      <input type="text" name="quant[1]" class="form-control input-number" value="1" min="1" max="10">
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </span>
+    </div> -->
+
+    </div> 
   </div>
 </template>
 <script>
@@ -62,6 +69,7 @@ export default {
             var div = document.createElement('div');
             div.id = 'navViewUl-div';
             span.appendChild( document.createTextNode(j) );
+            span.className = 'specs';
             spanNum.appendChild(document.createTextNode(num));  
             div.appendChild(span); 
             div.appendChild(spanNum); 
@@ -74,11 +82,17 @@ export default {
                 var el_parent = el_child.parentElement;
                 el_parent.removeChild(el_child);
               }
-              var div = document.createElement("div");
-              div.id = 'navViewUl-button';
-              div.innerHTML = `<button> + </button>
-                           <button> - </button>`;;
-              e.target.parentNode.appendChild(div);
+              var span = document.createElement("span");
+              span.id = 'navViewUl-button';
+              span.innerHTML = `
+              <button type="button" class="btn btn-sm btn-number">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+              <button type="button" class="btn btn-sm btn-number">
+                  <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              `;
+              e.target.parentNode.appendChild(span);
             })
           })          
         }        
