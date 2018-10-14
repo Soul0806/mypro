@@ -1,8 +1,9 @@
 <template>
   <div class="nav">
-    <div class="navInch">
-      <ul>
-        <li :class="{ active: isActive(inch) }" 
+    <div class="navInch mx-auto">
+      <ul class="list-inline">
+        <li :class="{ active: isActive(inch) }"
+        class="list-inline-item" 
         v-for="inch in data.inches"  
         @mouseover="updateView(inch), active(inch)">
           <span class="">{{ inch }}</span>
@@ -59,11 +60,12 @@ export default {
       this.ref.child('tire/' + i).once('value', snapShot => {
         let oTire = snapShot.val();
         var ul = document.createElement('ul');
-        ul.className = 'navViewUl';
+        ul.className = 'navViewUl, list-group';
         for (let j in oTire) {
           this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
             let num = snapShot.val().num;
             var li  = document.createElement("li");
+            li.classname = 'list-group-item';
             var span = document.createElement("span");
             var spanNum = document.createElement("span");
             var div = document.createElement('div');

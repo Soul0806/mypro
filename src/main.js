@@ -15,6 +15,7 @@ Vue.use(BootstrapVue);
 const fb = require('./db.js')
 
 import "@/assets/css/bootstrap.min.css";
+import "@/assets/css/bootstrap-theme.min.css";
 import '@/assets/main.scss'
 
 //const axios = require('axios');

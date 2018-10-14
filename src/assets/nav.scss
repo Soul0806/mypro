@@ -2,18 +2,19 @@
 
 .navInch { 
   ul {    
-    display: flex;
-    justify-content: center;
+    //display: flex;
+    //justify-content: center;
+    //font-size: 2.5rem;
     @include ul-reset;    
     li {
-      line-height: 1rem;
-      font-size: 2.5rem;
+      //line-height: 1rem;     
       padding: 0px 20px;
       span {
-        padding: 0px 9px;
+        display: inline-block;
+        padding: 0px 10px;        
       }
       &.active span{
-         font-size: 3rem; 
+         //font-size: 3rem; 
          border-bottom: 2px solid #ffa500
       }
     }
@@ -24,13 +25,13 @@
 }
 
 .navViewUl {
-  @include ul-reset; 
-  @include flex-center; 
-  flex-direction:column;
+  //@include ul-reset; 
+  //@include flex-center; 
+  //flex-direction:column;
   
-  width: 80%;
-  height: 200px;
-  margin: 50px auto;
+  //width: 80%;
+  //height: 200px;
+  //margin: 50px auto;
   //border:1px solid #111111;
   li {
     font-size: 2rem;
