@@ -1,34 +1,17 @@
 <template>
-  <div class="nav">
-    <div class="navInch mx-auto">
+  <div class="h-nav">
+    <div class="navInch">      
       <ul class="list-inline">
-        <li :class="{ active: isActive(inch) }"
-        class="list-inline-item" 
+        <li :class="{ active: isActive(inch) }" 
+        class="list-inline-item"
         v-for="inch in data.inches"  
         @mouseover="updateView(inch), active(inch)">
           <span class="">{{ inch }}</span>
         </li>         
-      </ul>      
+      </ul>  
     </div>
     <div id="navView">
-    </div>
-    <div id="test">
-
-   <!--  <div class="input-group">
-      <span class="input-group-btn">
-        <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-          <span class="glyphicon glyphicon-minus"></span>
-        </button>
-      </span>
-      <input type="text" name="quant[1]" class="form-control input-number" value="1" min="1" max="10">
-      <span class="input-group-btn">
-        <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
-      </span>
-    </div> -->
-
-    </div> 
+    </div>  
   </div>
 </template>
 <script>
@@ -46,9 +29,6 @@ export default {
    
   },
   methods: {
-    test() {
-      console.log(123);
-    },
     active(inch) {
       this.currrentInch = inch;
     },
@@ -60,7 +40,7 @@ export default {
       this.ref.child('tire/' + i).once('value', snapShot => {
         let oTire = snapShot.val();
         var ul = document.createElement('ul');
-        ul.className = 'navViewUl, list-group';
+        ul.className = 'navViewUl list-group';
         for (let j in oTire) {
           this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
             let num = snapShot.val().num;
@@ -134,7 +114,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 @import '@/assets/nav.scss';
 </style>
 
