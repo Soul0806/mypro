@@ -20,28 +20,7 @@ export default {
   name: "top"
 }
 </script>
-
 <style lang="scss" scoped>
-
-.top {
-  font-size: 1rem;
-  width: 600px;
-  margin: auto;
-  padding: 20px 0px;
-}
-
-.top a {
-  text-decoration: none;
-  color: #777;
-  border-right: 1px solid #ccc;
-}
-
-.top a:hover {
-  color: #000;
-}
-
-.top li:last-of-type a {
-  border-right: none; 
-}
+@import '@/assets/top.scss';
 </style>
 

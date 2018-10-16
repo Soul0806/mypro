@@ -21,11 +21,11 @@ import '@/assets/main.scss'
 //const axios = require('axios');
 //Vue.config.productionTip = false
 /* eslint-disable no-new */
-import defineElements from '@/defineElements.js'
-const vueli = defineElements.vueli;
-const test = defineElements.test;
-Vue.component('vueli', vueli);
-Vue.component('test', test);
+//import defineElements from '@/defineElements.js'
+//const vueli = defineElements.vueli;
+//const test = defineElements.test;
+//Vue.component('vueli', vueli);
+//Vue.component('test', test);
 
 let app;
 // Initialize Firebase

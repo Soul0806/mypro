@@ -22,8 +22,5 @@ export default {
   text-align: center;
   margin-top: 10px;
 }
-a {
-  padding: 0px 10px;
-}
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css); 
 </style>

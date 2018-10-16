@@ -1,16 +1,27 @@
-  body {
+body {
   font-family: 'Noto Sans TC', sans-serif;
-  height: 100vh;
-  padding: 0px;
-  margin: 0px;
 }
-  /* display: -webkit-flex;
-  display:         flex; */
-  /* -webkit-justify-content: center;
-        justify-content: center; */ 
-  /* display: table;
-     display: table-cell;
-     vertical-align: middle; */
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.glyphicon-plus:before {
+    content: "\2b"
+}
+
+.glyphicon-minus:before {
+    content: "\2212"
+}
+
 
 .logout {
   margin-left: 10px;

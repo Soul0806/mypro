@@ -34,43 +34,39 @@ export default {
     },
     isActive(inch) {
       return this.currrentInch == inch ? true : false;
-    },
+    },    
     updateView(inch) {  
-      var i = inch;     
+      var i = inch;
+      var flag = 1;     
       this.ref.child('tire/' + i).once('value', snapShot => {
         let oTire = snapShot.val();
-        var ul = document.createElement('ul');
-        ul.className = 'navViewUl list-group';
+        var ul = this.ctElem('ul', { cls: 'navViewUl' });
         for (let j in oTire) {
           this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
             let num = snapShot.val().num;
-            var li  = document.createElement("li");
-            li.classname = 'list-group-item';
-            var span = document.createElement("span");
-            var spanNum = document.createElement("span");
-            var div = document.createElement('div');
-            div.id = 'navViewUl-div';
+            var li  =  this.ctElem('li');
+            var span =  this.ctElem('span', 'specs');
+            var spanNum =  this.ctElem('span');
+            var div =  this.ctElem('div', { id: 'navViewUl-div'} );
             span.appendChild( document.createTextNode(j) );
-            span.className = 'specs';
             spanNum.appendChild(document.createTextNode(num));  
             div.appendChild(span); 
             div.appendChild(spanNum); 
             li.appendChild(div);
-            ul.appendChild(li);   
-            
-            span.addEventListener('click', function (e) {
+            ul.appendChild(li);
+
+            span.addEventListener('click', (e) => {
               var el_child = document.getElementById('navViewUl-button');
               if (el_child != null) {
                 var el_parent = el_child.parentElement;
                 el_parent.removeChild(el_child);
               }
-              var span = document.createElement("span");
-              span.id = 'navViewUl-button';
+              var span = this.ctElem("span", { id: 'navViewUl-button' });
               span.innerHTML = `
-              <button type="button" class="btn btn-sm btn-number">
+              <button type="button" class="btn btn-danger btn-number">
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
-              <button type="button" class="btn btn-sm btn-number">
+              <button type="button" class="btn btn-success btn-number">
                   <span class="glyphicon glyphicon-plus"></span>
               </button>
               `;
