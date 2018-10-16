@@ -11,6 +11,9 @@
     &:hover {
       color: #000;
     }
+    &.active {
+      color: red;
+    }
   }
   li:last-of-type a {
     border-right: none; 

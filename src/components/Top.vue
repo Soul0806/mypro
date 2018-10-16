@@ -3,8 +3,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item active">
-            <router-link to="/">總覽 </router-link>
+          <li class="nav-item">
+            <router-link to="/" :class="">總覽 </router-link>
           </li> 
           <li class="nav-item">
             <router-link to="/new">新增 </router-link>
@@ -17,7 +17,16 @@
 
 <script>
 export default {
-  name: "top"
+  name: "top",
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    isActive() {
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

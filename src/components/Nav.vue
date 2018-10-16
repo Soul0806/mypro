@@ -7,11 +7,11 @@
         v-for="inch in data.inches"  
         @mouseover="updateView(inch), active(inch)">
           <span class="">{{ inch }}</span>
-        </li>         
+        </li>
       </ul>  
     </div>
     <div id="navView">
-    </div>  
+    </div> 
   </div>
 </template>
 <script>
