@@ -12,6 +12,7 @@
         padding: 0px 10px;        
       }
       &.active span{
+        cursor: pointer;
         font-size: 2rem;  
         border-bottom: 2px solid #ffa500
       }
@@ -34,7 +35,6 @@
     font-size: 1rem;
     div {
       width: 180px;
-      height: 30px;
       margin: 10px auto;
       > span:first-child {
         display: inline-block;
@@ -42,7 +42,7 @@
       }
     }
     span {
-      &.specs {
+      &.spec {
         display: inline-block;
         width: 100px;
       }   
@@ -52,15 +52,18 @@
       }
       
       button {
-        padding: .275rem .75rem;
+        padding: .125rem .45rem;
       }
-    }  
-    &:hover .specs{
-      
-    }
+    } 
   }
 
   #navViewUl-div {
     width: 250px;
+    height: 30px;
   }
 }  
+
+img {
+  width: 24px;
+  height: 24px;
+}

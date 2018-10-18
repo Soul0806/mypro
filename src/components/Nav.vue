@@ -5,13 +5,17 @@
         <li :class="{ active: isActive(inch) }" 
         class="list-inline-item"
         v-for="inch in data.inches"  
-        @mouseover="updateView(inch), active(inch)">
+        @click="updateView(inch), active(inch)">
           <span class="">{{ inch }}</span>
         </li>
       </ul>  
     </div>
     <div id="navView">
     </div> 
+    <div v-for="(val, key) in ims" class="purchase">
+      {{ key }} , {{ val.quantity }} 
+      <span @click="del(key)"><img src="../assets/icons/exit.png"></span>     
+    </div>
   </div>
 </template>
 <script>
@@ -22,7 +26,11 @@ export default {
     return {
       lastClick: 0,
       currrentInch: '',
-      contents: []
+      contents: [],
+      num: '',
+      today: new Date(),
+      date: '',
+      ims: ''
     }
   },
   computed: {
@@ -30,32 +38,34 @@ export default {
   },
   methods: {
     active(inch) {
-      this.currrentInch = inch;
+      this.currrentInch = inch; 
     },
     isActive(inch) {
       return this.currrentInch == inch ? true : false;
     },    
     updateView(inch) {  
+      if(this.currrentInch == inch) return;
       var i = inch;
       var flag = 1;     
       this.ref.child('tire/' + i).once('value', snapShot => {
         let oTire = snapShot.val();
         var ul = this.ctElem('ul', { cls: 'navViewUl' });
         for (let j in oTire) {
-          this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
-            let num = snapShot.val().num;
+          this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {            
+            this.num = snapShot.val().num;
             var li  =  this.ctElem('li');
-            var span =  this.ctElem('span', 'specs');
-            var spanNum =  this.ctElem('span');
+            var span =  this.ctElem('span', 'spec');
+            var spanNum =  this.ctElem('span', { id: 'specNum' });
             var div =  this.ctElem('div', { id: 'navViewUl-div'} );
             span.appendChild( document.createTextNode(j) );
-            spanNum.appendChild(document.createTextNode(num));  
+            spanNum.appendChild(document.createTextNode(this.num));  
             div.appendChild(span); 
             div.appendChild(spanNum); 
             li.appendChild(div);
             ul.appendChild(li);
 
             span.addEventListener('click', (e) => {
+              
               var el_child = document.getElementById('navViewUl-button');
               if (el_child != null) {
                 var el_parent = el_child.parentElement;
@@ -63,14 +73,28 @@ export default {
               }
               var span = this.ctElem("span", { id: 'navViewUl-button' });
               span.innerHTML = `
-              <button type="button" class="btn btn-danger btn-number">
+              <button id="decrease" type="button" 
+              class="btn btn-danger btn-number">
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
-              <button type="button" class="btn btn-success btn-number">
+              <button id="increase" type="button" 
+              class="btn btn-success btn-number">
                   <span class="glyphicon glyphicon-plus"></span>
               </button>
               `;
-              e.target.parentNode.appendChild(span);
+              e.target.parentNode.appendChild(span); 
+
+              this.num = e.target.nextElementSibling.innerHTML;
+              var specNumElem = e.target.nextElementSibling;
+              var btnDec = document.getElementById('decrease');
+              var btnInc = document.getElementById('increase');
+              btnDec.addEventListener('click', (e) => {
+                this.ctlNums('decrease', specNumElem, j);
+              }) 
+              btnInc.addEventListener('click', (e) => {
+                this.ctlNums('increase', specNumElem, j);
+                this.purchase(j);
+              }) 
             })
           })          
         }        
@@ -78,33 +102,52 @@ export default {
         navView.appendChild(ul);              
       })
     },
-    ctlNums(behav, obj) {
-      (behav == 'add') ?  obj.num++ : obj.num-- ;
-      this.ref.child('tire/' + this.specs.inch + '/' + obj.spec).set({
-        num: obj.num
+    ctlNums(behav, specNumElem, inch) {
+      (behav == 'increase') ? this.num++ : this.num-- ;
+      this.ref.child('tire/' + this.currrentInch + '/' + inch).set({
+        num: this.num
       });
+      specNumElem.innerHTML = this.num;
+    },
+    purchase(inch) {
+      var d = this.today.toLocaleString().slice(2,10).replace(/\//ig, "-");
+      var t = this.today.toLocaleString().slice(10).replace(/\s/g, '');
+
+      var data = {
+        time: t,
+        q: 1
+      }
+
+      var newDataKey = this.ref.child(`purchase/${d}/${inch}`).push().key;
+      var updates= {};
+      updates[`purchase/${d}/${inch}/` + newDataKey] = data;
+
+      return this.ref.update(updates);
+    },
+    del(inch) {
+      this.ref.child(`purchase/${this.date}/${inch}`).set(null);
     }
   },
-  mounted() {
-    for (let i = 12; i <= 20; i++) {        
-      this.ref.child('tire/' + i).once('value', snapShot => {
-        var contents = [];
-        let oTire = snapShot.val();
-        for (let j in oTire) {
-          this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {
-            let num = snapShot.val().num; 
-            let obj = { spec: j, num: num } 
-            contents.push(obj);   
-          })
+  mounted() {    
+    this.data.inches = _.range(12, 21);       
+    this.date = this.today.toLocaleString().slice(2, 10).replace(/\//ig, "-");
+    this.ref.child(`purchase/${this.date}`).on('value', (snapShot) => {
+      var val = snapShot.val();
+      this.ims = val;      
+      for(let key in this.ims) {        
+        if( this.ims.hasOwnProperty(key) ) {
+          var quan = Object.keys(this.ims[key]).length;
+          console.log(this.ims[key]);
+          this.ims[key].quantity = quan;
+         // console.log(Object.keys(this.ims[key]).length)
         }
-        this.data.inches.push(i);
-        this.data.tires.push({
-          [i]: contents
-        })
-      })
-      // 12 13'' combined
-      var test = 123;
-    }
+      }
+      console.log(this.ims);
+      //console.log(this.ims);
+      Object.values(val).forEach(function (el) {
+        console.log(Object.keys(el).length);
+      });
+    })
   }
 }
 </script>

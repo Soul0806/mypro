@@ -12,7 +12,7 @@ const regular = {
       auth,
       ref,
       tires,
-      data: { tempInch: [], inches: [], tires: [] },
+      data: { tempInch: [], inches: '', tires: [] },
       specs: { width: "", height: "", inch: "" }
     };
   },
@@ -25,14 +25,14 @@ const regular = {
           : (el.id = argu.id);
       }
       return el;
-    },
-    ctlNums(behav, obj, inch) {
+    }
+    /* ctlNums(behav, obj, inch) {
       this.specs.inch = inch;
       behav == "add" ? obj.num++ : obj.num--;
       this.ref.child("tire/" + this.specs.inch + "/" + obj.spec).set({
         num: obj.num
       });
-    }
+    } */
   }
 };
 
