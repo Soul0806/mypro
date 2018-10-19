@@ -12,9 +12,20 @@
     </div>
     <div id="navView">
     </div> 
-    <div v-for="(val, key) in ims" class="purchase">
-      {{ key }} , {{ val.quantity }} 
-      <span @click="del(key)"><img src="../assets/icons/exit.png"></span>     
+    <div class="navPurchase">
+      <div v-for="(val, key) in ims">    
+        <h2>{{ key }}</h2>
+          <ul>
+            <li v-for="(val, key_d) in val"> 
+            <div>
+              <span>{{ key_d }}, {{ val }}</span>
+              <span @click="del(key, key_d, val)">
+                  <img src="../assets/icons/exit.png">
+              </span>
+            </div>
+            </li>
+          </ul>        
+      </div>
     </div>
   </div>
 </template>
@@ -51,10 +62,10 @@ export default {
         let oTire = snapShot.val();
         var ul = this.ctElem('ul', { cls: 'navViewUl' });
         for (let j in oTire) {
-          this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {            
+          this.ref.child('tire/' + i + '/' + j).once('value', snapShot => {   
             this.num = snapShot.val().num;
             var li  =  this.ctElem('li');
-            var span =  this.ctElem('span', 'spec');
+            var span =  this.ctElem('span', { id: j });
             var spanNum =  this.ctElem('span', { id: 'specNum' });
             var div =  this.ctElem('div', { id: 'navViewUl-div'} );
             span.appendChild( document.createTextNode(j) );
@@ -124,30 +135,47 @@ export default {
 
       return this.ref.update(updates);
     },
-    del(inch) {
-      this.ref.child(`purchase/${this.date}/${inch}`).set(null);
+    del(date, specInch, q) {
+      var specNumElem = document.getElementById(specInch).nextElementSibling;
+      if(specNumElem) {
+        var specNum = specNumElem.innerHTML;
+        specNumElem.innerHTML = specNum - q
+      }            
+      var inch = specInch.slice(-2);
+      
+      this.ref.child(`tire/${inch}/${specInch}`)
+          .once('value', (snapShot) => {
+            var val = snapShot.val();
+            this.num = val.num;
+          })
+      var updates = {};   
+      updates[`purchase/${date}/${specInch}`] = null;
+      updates[`tire/${inch}/${specInch}`] = {
+        num: this.num - (q)
+      }
+      //console.log(`purchase/${date}/${specInch}`);
+      return this.ref.update(updates);
+      //this.ref.child(`purchase/${date}/${specInch}`).set(null);
+    },
+    p(obj) {
+     
     }
-  },
+},
   mounted() {    
-    this.data.inches = _.range(12, 21);       
-    this.date = this.today.toLocaleString().slice(2, 10).replace(/\//ig, "-");
-    this.ref.child(`purchase/${this.date}`).on('value', (snapShot) => {
-      var val = snapShot.val();
+    this.data.inches = _.range(12, 21);
+    this.ref.child(`purchase/`).on('value', (snapShot) => {
+    var val = snapShot.val();
       this.ims = val;      
       for(let key in this.ims) {        
         if( this.ims.hasOwnProperty(key) ) {
-          var quan = Object.keys(this.ims[key]).length;
-          console.log(this.ims[key]);
-          this.ims[key].quantity = quan;
-         // console.log(Object.keys(this.ims[key]).length)
+          for(let key_d in this.ims[key]) {
+            var obj = this.ims[key][key_d];          
+            this.ims[key][key_d] = Object.keys(obj).length;
+          }  
         }
       }
       console.log(this.ims);
-      //console.log(this.ims);
-      Object.values(val).forEach(function (el) {
-        console.log(Object.keys(el).length);
-      });
-    })
+    })    
   }
 }
 </script>

@@ -24,9 +24,7 @@
 }
 #navView {
   margin-top: 40px;  
-}
-
-.navViewUl {
+  .navViewUl {
   @include flex-space-between;
   flex-direction: column;
   height: 200px;
@@ -61,9 +59,29 @@
     width: 250px;
     height: 30px;
   }
-}  
-
-img {
-  width: 24px;
-  height: 24px;
+  } 
 }
+
+.navPurchase {
+  @include flex;
+  > div {
+    margin: 0px 20px;
+  }
+  ul {
+    @include ul-reset;
+    li {    
+      margin: 0px;
+    }
+    span:first-child {
+      display: inline-block;
+      width: 100px;
+    }  
+  }  
+  
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+ 
+
