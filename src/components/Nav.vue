@@ -2,10 +2,10 @@
   <div class="h-nav">
     <div class="navInch">      
       <ul class="list-inline">
-        <li :class="{ active: isActive(inch) }" 
-        class="list-inline-item"
-        v-for="inch in data.inches"  
-        @click="updateView(inch), active(inch)">
+        <li class="list-inline-item"        
+        :class="{ active: isActive(inch) }"
+        v-for="inch in inches"  
+        @click="updateView(inch)">
           <span class="">{{ inch }}</span>
         </li>
       </ul>  
@@ -13,7 +13,7 @@
     <div id="navView">
     </div> 
     <div class="navPurchase">
-      <div v-for="(val, key) in ims">    
+      <div v-for="(val, key) in purchases">    
         <h2>{{ key }}</h2>
           <ul>
             <li v-for="(val, key_d) in val"> 
@@ -34,18 +34,23 @@
 export default {
   name: "Nav",
   data() { 
-    return {
-      lastClick: 0,
-      currrentInch: '',
-      contents: [],
-      num: '',
-      today: new Date(),
+    return {     
+      currrentInch: '',     
+      num: '',      
       date: '',
-      ims: ''
+      purchases: '',
+      lastClick: 0,
+      today: new Date(),
+      contents: []
     }
   },
   computed: {
-   
+  /*  navInch_ObjClass: function () {
+      return {
+        active: isActive(inch),
+        'list-inline-item': true
+      }
+    } */
   },
   methods: {
     active(inch) {
@@ -55,6 +60,7 @@ export default {
       return this.currrentInch == inch ? true : false;
     },    
     updateView(inch) {  
+     
       if(this.currrentInch == inch) return;
       var i = inch;
       var flag = 1;     
@@ -112,6 +118,7 @@ export default {
         navView.innerHTML = '';
         navView.appendChild(ul);              
       })
+      this.active(inch);
     },
     ctlNums(behav, specNumElem, inch) {
       (behav == 'increase') ? this.num++ : this.num-- ;
@@ -157,24 +164,20 @@ export default {
       return this.ref.update(updates);
       //this.ref.child(`purchase/${date}/${specInch}`).set(null);
     },
-    p(obj) {
-     
-    }
 },
   mounted() {    
-    this.data.inches = _.range(12, 21);
-    this.ref.child(`purchase/`).on('value', (snapShot) => {
-    var val = snapShot.val();
-      this.ims = val;      
-      for(let key in this.ims) {        
-        if( this.ims.hasOwnProperty(key) ) {
-          for(let key_d in this.ims[key]) {
-            var obj = this.ims[key][key_d];          
-            this.ims[key][key_d] = Object.keys(obj).length;
+    this.inches = _.range(12, 21);
+    this.ref.child(`purchase/`).on('value', snapShot => {
+      this.purchases = snapShot.val();     
+      for(let key in this.purchases) {        
+        if( this.purchases.hasOwnProperty(key) ) {
+          for(let key_d in this.purchases[key]) {
+            let obj = this.purchases[key][key_d];
+            // second floor replace
+            this.purchases[key][key_d] = Object.keys(obj).length;
           }  
         }
       }
-      console.log(this.ims);
     })    
   }
 }

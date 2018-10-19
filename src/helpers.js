@@ -12,7 +12,8 @@ const regular = {
       auth,
       ref,
       tires,
-      data: { tempInch: [], inches: '', tires: [] },
+      inches: '',
+      data: { tempInch: [], tires: [] },
       specs: { width: "", height: "", inch: "" }
     };
   },
