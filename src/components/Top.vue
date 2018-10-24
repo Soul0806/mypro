@@ -13,6 +13,7 @@
             :class="{ active: isActive('insert') }"
             >新增 </router-link>
           </li>
+          new
         </ul>
       </div>
     </nav>
