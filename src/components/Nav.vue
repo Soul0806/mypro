@@ -1,5 +1,8 @@
 <template>
   <div class="h-nav">
+    <div class="nc navCtrl">
+      <button @click="nc_reset">reset</button>
+    </div>
     <div class="ni navInch">      
       <ul class="list-inline">
         <li class="list-inline-item"        
@@ -47,6 +50,19 @@ export default {
   computed: {
   },
   methods: {
+    nc_reset() {
+      this.db_tires().on('value', snapShot => {
+        var val = snapShot.val();
+        Object.keys(val).forEach( x => {    
+          Object.keys(val[x]).forEach( y => {
+            this.ref.child(`tire/${x}/${y}`).set({
+              num: 1
+            });
+          });
+        });
+      })
+      location.reload();
+    },  
     ni_active(inch) {
       this.currrentInch = inch; 
     },
@@ -74,7 +90,6 @@ export default {
             ul.appendChild(li);
 
             span.addEventListener('click', e => {
-              
             var navViewUl_button = document.getElementById('navViewUl-button');
             if (navViewUl_button != null) navViewUl_button.remove();
             
@@ -82,11 +97,11 @@ export default {
             span.innerHTML = `
             <button id="decrease" type="button" 
             class="btn btn-danger btn-number">
-              <span class="glyphicon glyphicon-minus"></span>
+              <span class="glyphicon">售</span>
             </button>
             <button id="increase" type="button" 
             class="btn btn-success btn-number">
-                <span class="glyphicon glyphicon-plus"></span>
+                <span class="glyphicon">進</span>
             </button>
             `;
             
@@ -97,11 +112,11 @@ export default {
             var btnDec = document.getElementById('decrease');
             var btnInc = document.getElementById('increase');
             btnDec.addEventListener('click', e => {
-              this.nv_ctlNums('decrease', specNumElem, key);
+              //this.nv_ctlNums('decrease', specNumElem, key);
             }) 
             btnInc.addEventListener('click', e => {
-              this.nv_ctlNums('increase', specNumElem, key);
-              this.nv_purchase(key);
+              //this.nv_ctlNums('increase', specNumElem, key);
+              //this.nv_purchase(key);
             }) 
             })
           })          

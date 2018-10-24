@@ -1,9 +1,9 @@
-.top {
-  font-size: 1rem;
-  width: 600px;
-  margin: auto;
-  padding: 20px 0px;
-  > div {
+.top {  
+  > div:first-child {
+    font-size: 1rem;
+    ///width: 600px;
+    margin: auto;
+    padding: 20px 0px;
     text-align: center;
   }
   a {
@@ -23,5 +23,10 @@
     &:last-of-type a {
       border-right: none; 
     }
-  }  
+  }
+  span {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  } 
 }

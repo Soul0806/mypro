@@ -11,10 +11,10 @@
           <router-link to="/new" 
           :class="{ active: isActive('insert') }"
           >新增 </router-link>
-        </li>
-        new
+        </li>        
       </ul>
     </div>
+    <span>new</span>
   </div>
 </template>
 
