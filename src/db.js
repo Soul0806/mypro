@@ -15,22 +15,25 @@ const db = firebase.database();
 const auth = firebase.auth(); 
 const currentUser = auth.currentUser;
 const ref = db.ref('/');
-const tires = db.ref('tires/');
 
-/* const settings = {
-  timestampsInSnapshots: true
-} */
-//db.settings(settings);
+var db_tires = (e = '') => {
+  var reference = e == '' ? 'tire/' : `tire/${e}`; 
+  return db.ref(reference);
+}
 
-//const booksCollection = db.collection('books');
-//const usersCollection = db.collection('users');
+var db_purchases = (e = '') => {
+  var reference = e == '' ? "purchase/" : `purchase/${e}`;
+  return db.ref(reference);
+}
 
 export {
   db,
   auth,
   currentUser,
   ref,
-  tires
+  db_tires,
+  db_purchases
+  //purchases
   //booksCollection,
   //usersCollection
-}
+};
