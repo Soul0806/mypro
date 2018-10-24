@@ -3,6 +3,9 @@
   width: 600px;
   margin: auto;
   padding: 20px 0px;
+  > div {
+    text-align: center;
+  }
   a {
     text-decoration: none;
     color: #777;
@@ -15,7 +18,10 @@
       color: red;
     }
   }
-  li:last-of-type a {
-    border-right: none; 
-  }
+  li {
+    display: inline-block;
+    &:last-of-type a {
+      border-right: none; 
+    }
+  }  
 }
