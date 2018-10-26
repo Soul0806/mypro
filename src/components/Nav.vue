@@ -112,11 +112,11 @@ export default {
             var btnDec = document.getElementById('decrease');
             var btnInc = document.getElementById('increase');
             btnDec.addEventListener('click', e => {
-              //this.nv_ctlNums('decrease', specNumElem, key);
+              this.nv_ctlNums('decrease', specNumElem, key);
             }) 
             btnInc.addEventListener('click', e => {
-              //this.nv_ctlNums('increase', specNumElem, key);
-              //this.nv_purchase(key);
+              this.nv_ctlNums('increase', specNumElem, key);
+              this.nv_purchase(key);
             }) 
             })
           })          
