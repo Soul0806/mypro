@@ -15,7 +15,7 @@ Vue.mixin(helpers);
 //Vue.use(BootstrapVue);
 const fb = require('./db.js')
 
-import "@/assets/css/bootstrap.min.css";
+
 import '@/assets/main.scss'
 //import "@/assets/css/bootstrap-theme.min.css";
 
