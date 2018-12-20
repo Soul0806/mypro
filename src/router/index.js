@@ -4,25 +4,26 @@ import Router from 'vue-router'
 //import container from '@/components/container'
 import top from '@/components/top'
 import login from '@/components/login'
-import menu from '@/components/menu'
-import nav from '@/components/nav'
+import overview from "@/components/overview";
+import insert from '@/components/insert'
+import guide from "@/components/guide";
 
 import firebase from 'firebase'
 
 Vue.use(Router)
 
-const router =  new Router({
-  mode: 'history',
+const router = new Router({
+  mode: "history",
   routes: [
     {
-      path: '*',
-      redirect: '/login'
+      path: "*",
+      redirect: "/login"
     },
     {
-      path: '/',
-      name: 'nav',
+      path: "/",
+      name: "overview",
       components: {
-        default: nav,
+        default: overview,
         top: top
       },
       meta: {
@@ -30,10 +31,10 @@ const router =  new Router({
       }
     },
     {
-      path: '/new',
-      name: 'new',
+      path: "/guide",
+      name: "guide",
       components: {
-        default: menu,
+        default: guide,
         top: top
       },
       meta: {
@@ -41,12 +42,23 @@ const router =  new Router({
       }
     },
     {
-      path: '/login',
-      name: 'Login',
+      path: "/insert",
+      name: "insert",
+      components: {
+        default: insert,
+        top: top
+      },
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/login",
+      name: "Login",
       component: login
     }
   ]
-})
+});
 
 router.beforeEach((to, from, next) => {
   let currentUser = firebase.auth().currentUser;

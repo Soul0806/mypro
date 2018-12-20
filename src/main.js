@@ -11,11 +11,9 @@ import firebase from 'firebase'
 import helpers from '@/helpers.js'
 Vue.mixin(helpers);
 
-//import BootstrapVue from "bootstrap-vue";
-//Vue.use(BootstrapVue);
 const fb = require('./db.js')
 
-
+import "@/assets/css/bootstrap.min.css";
 import '@/assets/main.scss'
 //import "@/assets/css/bootstrap-theme.min.css";
 

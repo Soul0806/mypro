@@ -18,9 +18,5 @@ export default {
 </script>
 
 <style lang="scss">
-.header {
-  text-align: center;
-  margin-top: 10px;
-}
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css); 
 </style>

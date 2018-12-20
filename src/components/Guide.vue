@@ -50,17 +50,21 @@ export default {
   },
   methods: {
     nc_reset() {
-      this.db_tires().on('value', snapShot => {
+      this.closed();
+      return;
+      this.db_tires().once('value', snapShot => {
         var val = snapShot.val();
         Object.keys(val).forEach( x => {    
           Object.keys(val[x]).forEach( y => {
-            this.ref.child(`tire/${x}/${y}`).set({
-              num: 1
-            });
+            var newNum = val[x][y].num - 1;
+            //console.log(`tire/${x}/${y}`, newNum - 1);
+           this.ref.child(`tire/${x}/${y}`).set({
+              num: newNum 
+            });  
           });
         });
       })
-      location.reload();
+      //location.reload();
     },  
     ni_active(inch) {
       this.currrentInch = inch; 
@@ -169,11 +173,16 @@ export default {
       return this.ref.update(updates);
       //this.ref.child(`purchase/${date}/${specInch}`).set(null);
     },
-},
+    closed() {
+      console.log('closed');     
+    },
+    hovered() {   
+    }
+  },
   mounted() {
     this.inches = _.range(12, 21);
     this.db_purchases().on('value', snapShot => {
-      this.purchases = snapShot.val();     
+      this.purchases = snapShot.val();
       for(let key in this.purchases) {        
         if( this.purchases.hasOwnProperty(key) ) {
           for(let key_d in this.purchases[key]) {
@@ -183,12 +192,13 @@ export default {
           }  
         }
       } 
-    })    
+    }) 
+   
   }
 }
 </script>
 
 <style lang="scss">
-@import '@/assets/nav.scss';
+@import '@/assets/guide.scss';
 </style>
 
