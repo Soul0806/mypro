@@ -4,6 +4,7 @@ import Vue from 'vue'
 
 import App from './App'
 import router from './router'
+console.log(router);
 import _ from "lodash";
 import { store } from './store.js'
 import firebase from 'firebase'
@@ -11,8 +12,6 @@ import firebase from 'firebase'
 import helpers from '@/helpers.js'
 Vue.mixin(helpers);
 
-//import BootstrapVue from "bootstrap-vue";
-//Vue.use(BootstrapVue);
 const fb = require('./db.js')
 
 import "@/assets/css/bootstrap.min.css";

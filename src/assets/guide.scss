@@ -1,0 +1,108 @@
+@import 'mixins';
+
+.nc {  
+  display: flex;
+  flex-direction: row-reverse;
+  button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 1px 5px;
+    text-align: center;
+    cursor: pointer;
+  } 
+}
+.ni {
+  ul {    
+    text-align: center;  
+    li { 
+      display: inline-block;
+      font-size: 1.5rem;
+      margin: 0px; 
+      padding: 0px 20px;
+      cursor: pointer;
+      span {
+        display: inline-block;
+        padding: 0px 10px;        
+      }
+      &.active span{
+        cursor: default;
+        font-size: 2rem;  
+        border-bottom: 2px solid #ffa500
+      }
+    }
+    :nth-child(n+2) {
+      border-left: 1px solid #0a0a0a5c;
+    }   
+  }
+}
+.nv {
+  margin-top: 40px;  
+  .navViewUl {
+  @include flex-space-between;
+  flex-direction: column;
+  height: 200px;
+  li {
+    display: inline-block;
+    font-size: 1rem;
+    div {
+      width: 180px;
+      margin: 10px auto; 
+      > span:first-child {
+        display: inline-block;
+        width: 100px;
+        cursor: pointer;
+      }
+      span {
+        &.spec {
+          display: inline-block;
+          width: 100px;
+        }   
+        &:nth-child(2) {
+          display: inline-block;
+          margin: 0px 10px 0px 30px;
+          }
+          
+        button {
+          padding-top: 1px;
+        }
+      }
+    }
+     
+  }
+
+  #navViewUl-div {
+    width: 250px;
+    height: 30px;
+  }
+  } 
+}
+.np {
+  @include flex;
+  > div {
+    margin: 0px 20px;
+  }
+  ul {
+    @include ul-reset;
+    li {    
+      margin: 0px;
+    }
+    span:first-child {
+      display: inline-block;
+      width: 100px;
+    }  
+  }  
+  
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 800px) {
+  .nv {
+    .navViewUl {
+      display: inline;
+    }
+  }
+}

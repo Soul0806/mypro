@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view  name="top"/>
+    <router-view  name="nav"/>
     <router-view/>
     <!-- <test></test> -->
   </div>
@@ -9,18 +9,12 @@
 <script>
 // import test from '@/components/test'
 
+
 export default {
   name: 'App',
-  components: {
-    //test
-  }
 }
 </script>
 
 <style lang="scss">
-.header {
-  text-align: center;
-  margin-top: 10px;
-}
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css); 
 </style>
