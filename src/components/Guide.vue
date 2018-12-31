@@ -1,36 +1,33 @@
 <template>
-  <div class="h-nav">
-    <!-- <div class="nc navCtrl">
-      <button @click="nc_reset">reset</button>
-    </div> -->
-    <div class="ni navInch">      
-      <ul class="list-inline">
-        <li class="list-inline-item"        
-        :class="{ active: ni_isActive(inch) }"
+  <section id="guide">
+    <div class="wrapper gu">
+      <ul class="gu-inch">
+        <li      
         v-for="inch in inches"  
+        :class="{ active: inchActive(inch) }"
         @click="ni_updateView(inch)">
-          <span class="">{{ inch }}</span>
+          <span>{{ inch }}</span>
         </li>
       </ul>  
-    </div>
-    <div class="nv" id="navView">
-    </div> 
-    <div class="np navPurchase">
-      <div v-for="(val, key) in purchases">    
-        <h2>{{ key }}</h2>
-          <ul>
-            <li v-for="(val, key_d) in val"> 
-            <div>
-              <span>{{ key_d }}, {{ val }}</span>
-              <span @click="np_del(key, key_d, val)">
-                  <img src="../assets/icons/exit.png">
-              </span>
-            </div>
-            </li>
-          </ul>        
+      <div class="nv" id="navView">
+      </div> 
+      <div class="np navPurchase">
+        <div v-for="(val, key) in purchases">    
+          <h2>{{ key }}</h2>
+            <ul>
+              <li v-for="(val, key_d) in val"> 
+              <div>
+                <span>{{ key_d }}, {{ val }}</span>
+                <span @click="np_del(key, ky_d, val)">
+                    <img src="../assets/icons/exit.png">
+                </span>
+              </div>
+              </li>
+            </ul>        
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 <script>
 export default {
@@ -69,7 +66,7 @@ export default {
     ni_active(inch) {
       this.currrentInch = inch; 
     },
-    ni_isActive(inch) {
+    inchActive(inch) {
       return this.currrentInch == inch ? true : false;
     },    
     ni_updateView(inch) {       

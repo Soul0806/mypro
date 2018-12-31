@@ -2,16 +2,12 @@
 
 #overview {
   .wrapper {    
+    margin-top: 10px;
     .ov-st {
       @include flex-space-between;
-      margin: 0px;
-      padding: 0px;
       .ov-st-li {
         list-style-type: none;
-        text-align: center;
         width: 400px;
-        margin: 10px;
-        //height: 300px;
         .ov-st-inch {
           border-bottom: 1px solid black;
         }
@@ -19,22 +15,18 @@
     }
     .ov-nd {
       @include flex;
-      //align-content:flex-start;
       flex-direction: column;      
       list-style-type: none;
       height: 200px;
-      margin-top: 10px;
       .ov-nd-li {
-        text-align: left;
-        margin: 0px 5px;
+        margin: 2px 5px;
         .ov-nd-spec {
           display: inline-block;
-          width: 80px;
+          width: 100px;
         }
         .ov-nd-num {
-          margin-left: 10px;
           &.zero {
-            color: red;
+            color:red;
           }
         }
       }
