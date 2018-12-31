@@ -1,6 +1,6 @@
 <template>
   <section id="guide">
-    <div>gh-pages 123</div>
+    <div>gh-pages 456</div>
     <div class="wrapper gu">
       <ul class="gu-inch">
         <li      
