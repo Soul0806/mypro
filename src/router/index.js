@@ -9,6 +9,7 @@ import insert from '@/components/insert'
 import guide from "@/components/guide";
 
 import firebase from 'firebase'
+import { exists } from 'fs';
 
 Vue.use(Router)
 
@@ -31,11 +32,20 @@ const router = new Router({
       }
     },
     {
-      path: "/guide",
+      path: "/guide/:inch",
       name: "guide",
       components: {
         default: guide,
         nav: nav
+        /* children: [
+          {
+            path: '',
+            component: {
+              default: guide,
+              nav: nav,
+            }
+          }
+        ] */
       },
       meta: {
         requiresAuth: true

@@ -1,5 +1,5 @@
 header {
-  nav {
+  nav { 
     .wrapper {
       background-color: #35424a;
       ul {
@@ -19,13 +19,16 @@ header {
         &:last-child a {
           border-right: none;
         }
-      }
-      .router-link-exact-active {
-        color: red;
-      }
-      :not(.router-link-exact-active):hover {
-        color: red;
+        &.active a {
+          color: red;
+        } 
       }
     }
   }
 }
+
+#test {
+  position: sticky; 
+  top: 0px;   
+}
+

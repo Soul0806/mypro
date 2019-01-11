@@ -11,10 +11,11 @@ const regular = {
       db,
       auth,
       ref,
-      tires: '',
+      tires: [],
       db_tires,
       db_purchases,
       inches: '',
+      
       data: { tempInch: [], tires: [] },
       specs: { width: "", height: "", inch: "" }
     };

@@ -1,32 +1,65 @@
 @import "mixins";
 
 #overview {
-  .wrapper {    
-    margin-top: 10px;
-    .ov-st {
-      @include flex-space-between;
-      .ov-st-li {
-        list-style-type: none;
-        width: 400px;
-        .ov-st-inch {
-          border-bottom: 1px solid black;
+  #ov-inch {
+    position: sticky;
+    top: 0px;
+    background-color: #35424a;
+    overflow: hidden;
+    ul {
+      @include flex-center;
+      text-align: center;
+      width: 300px;
+      margin: 5px auto;
+      li {
+        display: inline-block;
+        width: 100px;
+        a {
+          font-size: 1.4rem;
+          color: #777;
         }
       }
     }
-    .ov-nd {
-      @include flex;
-      flex-direction: column;      
-      list-style-type: none;
-      height: 200px;
-      .ov-nd-li {
-        margin: 2px 5px;
-        .ov-nd-spec {
-          display: inline-block;
-          width: 100px;
+  }
+  #ov-tire {
+    margin: 10px;
+    .ov-tire-st {
+      @include flex-space-between;
+      /* &:first-child {
+        padding-top: 109px;
+      } */
+      .ov-tire-st-li {
+        list-style-type: none;
+        width: 400px;
+        .ov-tire-st-inch {
+          border-bottom: 1px solid black;
+          h3 {
+            display: inline-block;
+          }
+          &::before {
+            content: "";
+            display: block;
+            margin-top: -109px;
+            height: 109px;
+            //visibility: hidden;
+          }
         }
-        .ov-nd-num {
-          &.zero {
-            color:red;
+      }
+      .ov-tire-nd {
+        @include flex;
+        flex-direction: column;
+        list-style-type: none;
+        height: 200px;
+        .ov-tire-nd-li {
+          margin: 2px 5px;
+          .ov-tire-nd-spec {
+            display: inline-block;
+            width: 100px;
+          }
+          .ov-tire-nd-num {
+            &.zero {
+              color: red;
+            }
           }
         }
       }

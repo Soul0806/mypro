@@ -1,39 +1,49 @@
 @import "mixins";
 
-/* .nc {  
-  display: flex;
-  flex-direction: row-reverse;
-  button {
-    background-color: #4CAF50; 
-    border: none;
-    color: white;
-    padding: 1px 5px;
-    text-align: center;
-    cursor: pointer;
-  } 
-} */
 #guide {
   .wrapper {
-    margin-top: 10px;
-    .gu-inch {
-      text-align: center;
-      li {
-        display: inline;
-        font-size: 1.4rem;
-        padding: 0px 20px;
-        cursor: pointer;
-        &.active span{
-          cursor: default;
-          font-size: 2rem;
-          border-bottom: 2px solid #ffa500;
-        }
-      }
-      :nth-child(n + 2) {
-        border-left: 1px solid #0a0a0a5c;
-      }
-    }
+    margin: 5px;
   }
 }
+#gu-inch, #gu-view {
+  margin: 5px;
+}
+
+#gu-inch {
+  text-align: center;
+  li {
+    display: inline-block;
+    font-size: 1.4rem;
+    padding: 0px 20px;
+    a { 
+      color: #777;
+      text-decoration: none;
+    }
+    .router-link-exact-active {
+        cursor: default;
+        border-bottom: 2px solid #ffa500;
+      }
+    :not(.router-link-exact-active):hover {
+      color: red;
+    }
+  }
+  :nth-child(n + 2) {
+    border-left: 1px solid #0a0a0a5c;
+  }
+}
+
+#gu-view {
+  //text-align: center;
+  li {
+    list-style: none;
+    margin: 2px 5px;
+  }
+  span {
+    display: inline-block;
+    width: 100px;
+  }
+}
+
 .nv {
   margin-top: 40px;
   .navViewUl {
@@ -96,10 +106,21 @@
   }
 }
 
-@media (max-width: 800px) {
-  .nv {
-    .navViewUl {
-      display: inline;
+@media (max-width: 760px) {
+  #gu-inch {
+    @include flex; 
+    width: 300px;
+    margin: 10px auto;
+    li {
+      font-size: 1.6rem;
+      width: 130px;
+      padding: 5px;
+      &:nth-child(n + 2) {
+        border-left: none;
+      }
+      &.active span {
+        font-size: 1.6rem;
+      }
     }
   }
 }

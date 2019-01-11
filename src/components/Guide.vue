@@ -1,13 +1,18 @@
 <template>
   <section id="guide">
-    <div>gh-pages 456</div>
     <div class="wrapper gu">
-      <ul class="gu-inch">
-        <li      
-        v-for="inch in inches"  
-        :class="{ active: inchActive(inch) }"
-        @click="ni_updateView(inch)">
-          <span>{{ inch }}</span>
+      <ul id="gu-inch">
+        <li v-for="inch in inches"  
+        >     
+        <router-link :to="`/guide/${inch}`">
+          {{ inch }}  
+        </router-link>
+        </li>
+      </ul> 
+      <ul id="gu-view"> 
+        <li v-for="tire,key in tires">
+          <span class="spec">{{ key }}</span>
+          <span class="num">{{ tire.num }}</span>
         </li>
       </ul>  
       <div class="nv" id="navView">
@@ -32,7 +37,7 @@
 </template>
 <script>
 export default {
-  name: "Nav",
+  name: "Guide",
   data() { 
     return {     
       currrentInch: '',     
@@ -44,9 +49,21 @@ export default {
       contents: []
     }
   },
+  watch: {
+    '$route' (to, from) {
+     this.db_tires(to.params.inch).once('value', v => {
+      this.tires = v.val();
+     });
+    }
+  },
+  updated() {
+  },
   computed: {
   },
   methods: {
+    test(inch) {
+      this.$router.push({ path: `/guide/${inch}` });
+    },
     nc_reset() {
       this.closed();
       return;
@@ -70,7 +87,7 @@ export default {
     inchActive(inch) {
       return this.currrentInch == inch ? true : false;
     },    
-    ni_updateView(inch) {       
+    inchUpdateView(inch) {       
       if(this.currrentInch == inch) return;
       var i = inch;    
       this.db_tires(inch).once('value', snapShot => {
@@ -179,6 +196,7 @@ export default {
   },
   mounted() {
     this.inches = _.range(12, 21);
+    
     this.db_purchases().on('value', snapShot => {
       this.purchases = snapShot.val();
       for(let key in this.purchases) {        

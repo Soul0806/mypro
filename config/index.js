@@ -18,7 +18,7 @@ module.exports = {
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
-    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    poll: false, // https://we·bpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
     
     /**
@@ -35,7 +35,6 @@ module.exports = {
 
     cssSourceMap: true
   },
-
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),

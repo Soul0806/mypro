@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" >
     <router-view  name="nav"/>
     <router-view/>
     <!-- <test></test> -->
@@ -9,9 +9,10 @@
 <script>
 // import test from '@/components/test'
 
-
 export default {
   name: 'App',
+  methods: {
+  }
 }
 </script>
 

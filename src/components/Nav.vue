@@ -3,7 +3,8 @@
     <nav>
       <div class="wrapper">
         <ul>
-          <li v-for="tab in tabs">
+          <li v-for="tab in tabs"
+            :class="{ active: tabActive(tab) }">
             <router-link 
               :to="tab.link"
             >
@@ -11,7 +12,7 @@
           </li>
         </ul>
       </div>
-    </nav>
+    </nav> 
   </header>
 </template>
 
@@ -21,13 +22,22 @@ export default {
   data() {
     return {
       tabs: [
-        { name: { en: 'overview', ch: '總覽'} , link: '/' }, 
-        { name: { en: 'guide', ch: '導覽' }   , link: '/guide' }, 
+        { name: { en: 'overview', ch: '總覽'} , link: '/overview' }, 
+        { name: { en: 'guide', ch: '導覽' }   , link: '/guide/home' }, 
         { name: { en: 'insert', ch: '新增' }  , link: '/insert' }],
-      currentTab: 'overview',
     }
   },
+  computed: {
+  },
   methods: {
+    tabActive(tab) {
+      return this.$route.name == tab.link.match(/\w+/)[0];
+    }
+  },
+  updated() {
+  },
+  mounted() {
+    console.log(this.$route);
   }  
 }
 </script>
