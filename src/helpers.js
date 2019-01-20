@@ -21,26 +21,26 @@ const regular = {
     };
   },
   methods: {
-    ctElem(elem, argu = {}) {
-      let ct_Elem = document.createElement(elem);
+    ctElem(argu = {}) {
+      let ctElem = document.createElement(argu.elem);
       if (!this.isEmpty(argu)) {
-        /* argu.hasOwnProperty("cls")
-          ? (ct_Elem.className = argu.cls)
-          : (ct_Elem.id = argu.id); */
         for(let key in argu) {
           switch (key) {
             case 'cls':
-              ct_Elem.className = argu.cls;
+              ctElem.className = argu.cls;
               break;
             case 'id':
-              ct_Elem.id = argu.id;
+              ctElem.id = argu.id;
               break;
-            default:
-              tct_Elem.setAttribute("type", argu.type);
+            case 'text':
+              ctElem.innerHTML =  argu.text;
+              break;
+            /* default:
+              ctElem.setAttribute("type", argu.type); */
           }
         }
       }
-      return ct_Elem;      
+      return ctElem;      
     },
     isEmpty(obj) {
       for(let key in obj) {

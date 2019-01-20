@@ -1,7 +1,12 @@
 @import "mixins";
 
+#aaa {
+  display: block;
+}
+
 #overview {
   #ov-inch {
+    z-index: 20000;
     position: sticky;
     top: 0px;
     background-color: #35424a;
@@ -25,9 +30,6 @@
     margin: 10px;
     .ov-tire-st {
       @include flex-space-between;
-      /* &:first-child {
-        padding-top: 109px;
-      } */
       .ov-tire-st-li {
         list-style-type: none;
         width: 400px;
@@ -50,6 +52,17 @@
         flex-direction: column;
         list-style-type: none;
         height: 200px;
+        .li-operate {
+          text-align: center;
+          button {
+            display: inline-block;
+            z-index: 10000;
+            width: 300px;
+            border: 1px solid black;
+            margin-top: 15px;
+          }
+        }
+
         .ov-tire-nd-li {
           margin: 2px 5px;
           .ov-tire-nd-spec {

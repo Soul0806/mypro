@@ -17,7 +17,7 @@ const currentUser = auth.currentUser;
 const ref = db.ref('/');
 
 var db_tires = (e = '') => {
-  var reference = e == '' ? 'tire/' : `tire/${e}`; 
+  var reference = e == '' ? 'mytires/' : `mytires/${e}`; 
   return db.ref(reference);
 }
 

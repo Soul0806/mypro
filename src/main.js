@@ -13,9 +13,9 @@ import helpers from '@/helpers.js'
 Vue.mixin(helpers);
 
 const fb = require('./db.js')
-
 import "@/assets/css/bootstrap.min.css";
 import '@/assets/main.scss'
+
 //import "@/assets/css/bootstrap-theme.min.css";
 
 //const axios = require('axios');
@@ -42,6 +42,7 @@ firebase.initializeApp(config);
 /* firebase: {
   books: booksRef
 } */
+
 fb.auth.onAuthStateChanged(function(user) {
   if(!app) {
    app = new Vue({

@@ -22,9 +22,10 @@ export default {
   data() {
     return {
       tabs: [
-        { name: { en: 'overview', ch: '總覽'} , link: '/overview' }, 
-        { name: { en: 'guide', ch: '導覽' }   , link: '/guide/home' }, 
-        { name: { en: 'insert', ch: '新增' }  , link: '/insert' }],
+        { name: { en: 'overview', ch: '總覽'} , link: '/overview' },
+        //{ name: { en: 'guide', ch: '導覽' }   , link: '/guide/home' }, 
+        //{ name: { en: 'insert', ch: '新增' }  , link: '/insert' }
+      ],
     }
   },
   computed: {
@@ -37,7 +38,7 @@ export default {
   updated() {
   },
   mounted() {
-    console.log(this.$route);
+    
   }  
 }
 </script>
