@@ -23,7 +23,7 @@ export default {
     return {
       tabs: [
         { name: { en: 'overview', ch: '總覽'} , link: '/overview' },
-        //{ name: { en: 'guide', ch: '導覽' }   , link: '/guide/home' }, 
+        { name: { en: 'inventory', ch: '進銷' }   , link: '/inventory' }, 
         //{ name: { en: 'insert', ch: '新增' }  , link: '/insert' }
       ],
     }

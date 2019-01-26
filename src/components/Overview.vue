@@ -1,12 +1,11 @@
 <template>
-  <section id="overview">
+  <section id="overview" class="ov">
     <div id="ov-inch">
       <ul>
         <li v-for="inch in inches"><a :href="`#${inch}`">{{ inch }}</a></li>
       </ul>
     </div>
-    <div id="ov-tire" class="wrapper ov"  @click="reset">
-      <!-- <input type="file" @change="test"> -->
+    <div id="ov-tire" @click="reset">
       <div>Total: {{ tireSum }}</div>
       <ul class="ov-tire-st">
         <li class="ov-tire-st-li" v-for="inch in inches">
@@ -61,8 +60,10 @@ export default {
       operateInch: '',
       operateSpec: '',
       operateNum: 0,
+      operateOffset: 0,
       operateActive: false,
-      tireSum: 0
+      tireSum: 0,
+      today: new Date(),
     }
   },
   computed: {
@@ -73,19 +74,19 @@ export default {
       var spec = this.operateSpec;
       var targetSpecs = `${inch}/${spec}`;
       if(act == 'plus') {
-        this.db_tires(targetSpecs).set({ num: ++this.tires[inch][spec].num });       
+        this.db_tires(targetSpecs).set({ num: ++this.tires[inch][spec].num });  
+        this.operateOffset++;     
         this.tireSum++;
       } else {
         this.db_tires(targetSpecs).set({ num: --this.tires[inch][spec].num });
+        this.operateOffset--;
         this.tireSum--
       }
       this.operateNum = this.tires[inch][spec].num;
     },
     opActive(inch) {
-      if(this.operateInch == inch) 
-        return true;
-      return false;
-      //if(!this.operateInch) return false;      
+      if(this.operateInch == inch) return true;
+       return false;
     },
     test() {
       var self = this;
@@ -146,13 +147,23 @@ export default {
       return false;
     },
     reset() {
-      this.operateInch = this.operateSpec = '';
       if(this.operateActive == true) {
         document.getElementById('plus').remove();
         if(this.operateNum > 0)
           document.getElementById('take').remove();
       }
+      var d = this.today.toLocaleString().split(' ')[0].replace(/\//g,'-');
+      var t = this.today.toLocaleString().split(' ')[1].trim();
+      if(this.operateOffset > 0 ) {
+        //var ref = this.db.ref(`/purchase/${d}`);
+        var newKey = this.ref.child(`purchase/${d}`).push().key;
+        var updates = {};
+        updates[`/purchase/${d}/${newKey}`] = { spec: this.operateSpec, num: this.operateOffset, time: t };
+        this.ref.update(updates);
+      }
+      this.operateInch = this.operateSpec = '';
       this.operateActive = false;
+      this.operateOffset = 0;
     },
     clickEvent(elem, func) {
       elem.addEventListener('click', func);

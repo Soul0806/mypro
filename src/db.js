@@ -14,7 +14,7 @@ const db = firebase.database();
 //const db = firebase.firestore();
 const auth = firebase.auth(); 
 const currentUser = auth.currentUser;
-const ref = db.ref('/');
+const ref = db.ref();
 
 var db_tires = (e = '') => {
   var reference = e == '' ? 'mytires/' : `mytires/${e}`; 

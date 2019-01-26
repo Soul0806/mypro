@@ -4,15 +4,14 @@ import Router from 'vue-router'
 //import container from '@/components/container'
 import nav from '@/components/nav'
 import login from '@/components/login'
-import overview from "@/components/overview";
+import overview from "@/components/overview"
+import inventory from "@/components/inventory"
 import insert from '@/components/insert'
-import guide from "@/components/guide";
+//import guide from "@/components/guide";
 
 import firebase from 'firebase'
-import { exists } from 'fs';
 
 Vue.use(Router)
-
 const router = new Router({
   mode: "history",
   routes: [
@@ -32,10 +31,10 @@ const router = new Router({
       }
     },
     {
-      path: "/guide/:inch",
-      name: "guide",
+      path: "/inventory",
+      name: "inventory",
       components: {
-        default: guide,
+        default: inventory,
         nav: nav
         /* children: [
           {
